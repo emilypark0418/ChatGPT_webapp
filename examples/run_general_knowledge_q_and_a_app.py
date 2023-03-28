@@ -13,9 +13,9 @@ answer_suffix = "\n\n"
 
 
 # Construct GPT object and show some examples
-gpt = GPT(engine="davinci",
-          temperature=0.5,
-          max_tokens=100,
+gpt = GPT(engine="gpt-3.5-turbo",
+          temperature=0.7,
+          max_tokens=3000,
           input_prefix=question_prefix,
           input_suffix=question_suffix,
           output_prefix=answer_prefix,
@@ -32,7 +32,6 @@ gpt.add_example(Example('Who was president of the United States before George W.
                         'Bill Clinton was president of the United States before George W. Bush.'))
 gpt.add_example(Example('In what year was the Coronation of Queen Elizabeth?',
                         'The Coronation of Queen Elizabeth was in 1953.'))
-
 
 # Define UI configuration
 config = UIConfig(description="Question to Answer",

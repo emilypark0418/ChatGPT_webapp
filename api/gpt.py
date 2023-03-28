@@ -43,7 +43,7 @@ class GPT:
     A user can add examples and set parameters of the API request.
     """
     def __init__(self,
-                 engine='davinci',
+                 engine='gpt-3.5-turbo',
                  temperature=0.5,
                  max_tokens=100,
                  input_prefix="input: ",
@@ -111,14 +111,22 @@ class GPT:
 
     def submit_request(self, prompt):
         """Calls the OpenAI API with the specified parameters."""
-        response = openai.Completion.create(engine=self.get_engine(),
-                                            prompt=self.craft_query(prompt),
-                                            max_tokens=self.get_max_tokens(),
-                                            temperature=self.get_temperature(),
-                                            top_p=1,
-                                            n=1,
-                                            stream=False,
-                                            stop=self.stop)
+        response = openai.ChatCompletion.create(
+          model="gpt-3.5-turbo",
+          messages= [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": self.craft_query(prompt)}
+         ]
+        )
+
+        #response = openai.ChatCompletion.create(model=self.get_engine(),
+        #                                    prompt=self.craft_query(prompt),
+        #                                    max_tokens=self.get_max_tokens(),
+        #                                    temperature=self.get_temperature(),
+        #                                    top_p=1,
+        #                                    n=1,
+        #                                    stream=False,
+        #                                    stop=self.stop)
         return response
 
     def get_top_reply(self, prompt):
